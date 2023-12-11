@@ -4,6 +4,8 @@ import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Error from './pages/Error';
 
+import './style/main.css'
+
 export default function App() {
     return (
         <Routes>
