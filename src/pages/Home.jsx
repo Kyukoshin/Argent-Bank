@@ -1,7 +1,7 @@
 import Header from '../components/Header'
-import iconChat from '../assets/icon-chat.png'
-import iconMoney from '../assets/icon-money.png'
-import iconSecurity from '../assets/icon-security.png'
+import iconChat from '../img/icon-chat.png'
+import iconMoney from '../img/icon-money.png'
+import iconSecurity from '../img/icon-security.png'
 
 function Home() {
 	return (
