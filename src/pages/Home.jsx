@@ -1,12 +1,10 @@
-import Header from '../components/Header'
 import iconChat from '../img/icon-chat.png'
 import iconMoney from '../img/icon-money.png'
 import iconSecurity from '../img/icon-security.png'
 
 function Home() {
 	return (
-		<>	
-    <Header/>		
+		<>
 			<main>
 				<div className="hero">
 					<section className="hero-content">
@@ -39,9 +37,6 @@ function Home() {
 					</div>
 				</section>
 			</main>
-			<footer className="footer">
-				<p className="footer-text">Copyright 2023 Argent Bank</p>
-			</footer>
 		</>
 	)
 }
