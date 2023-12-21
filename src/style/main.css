@@ -289,3 +289,25 @@ body {
     width: 200px;
   }
 }
+
+.edit-container{
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  gap: 1em;
+}
+
+.edit-container-left{
+    display: flex;
+    flex-flow: column;
+    align-items: end;
+    gap: 1em;
+}
+
+.edit-container-right{
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+    gap: 1em;
+}
+

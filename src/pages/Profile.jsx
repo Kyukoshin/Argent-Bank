@@ -20,25 +20,25 @@ const Profile = () => {
   return (
     <main class="main bg-dark">
       <div className="header">
-      <h1>Welcome back<br />Tony Jarvis!</h1>
-      {!isEditing && (
-        <button className="edit-button" onClick={toggleEdit}>
-          Edit Name
-        </button>
-      )}
-      {isEditing && (
-        <div className="edit-container">
-          <div>
-            <input type="text" placeholder="Tony" />
-            <input type="text" placeholder="Jarvis" />
+        <h1>Welcome back<br />Tony Jarvis!</h1>
+        {!isEditing && (
+          <button className="edit-button" onClick={toggleEdit}>
+            Edit Name
+          </button>
+        )}
+        {isEditing && (
+          <div className="edit-container">
+            <div className="edit-container-left">
+              <input type="text" placeholder="Tony" />
+              <button onClick={saveAndClose}>Save</button>
+            </div>
+            <div className="edit-container-right">
+              <input type="text" placeholder="Jarvis" />
+              <button onClick={cancelEdit}>Cancel</button>
+            </div>
           </div>
-          <div>
-            <button onClick={saveAndClose}>Save</button>
-            <button onClick={cancelEdit}>Cancel</button>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
       <h2 class="sr-only">Accounts</h2>
       <section class="account">
         <div class="account-content-wrapper">
