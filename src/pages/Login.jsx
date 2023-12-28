@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess } from '../redux/actions';
+import { loginSuccess } from '../redux/auth';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -47,7 +47,7 @@ function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      const redirectPath = '/profile';
+      const redirectPath = '/';
       navigate(redirectPath);
     }
   }, [isAuthenticated, navigate]);
