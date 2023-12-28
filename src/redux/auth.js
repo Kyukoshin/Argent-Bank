@@ -8,13 +8,14 @@ const initialState = {
     lastName: '',
     email: '',
     password: '',
+    token: ''
 };
 
 export const auth = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loginSuccess: (state, action) => {
+        loginSuccess: (state) => {
             state.isAuthenticated = true;
             state.redirect = '/profile';
         },
@@ -33,8 +34,12 @@ export const auth = createSlice({
             state.firstName = action.payload.firstName
 			state.lastName = action.payload.lastName
         },
+
+        setToken: (state) => {
+            state.token = action.payload.token
+        }
     },
 });
 
-export const { setUserInfos, setAuthenticating, resetState, editUser, loginError, loginSuccess, logout } = auth.actions;
+export const { setUserInfos, setToken, setAuthenticating, resetState, editUser, loginError, loginSuccess, logout } = auth.actions;
 export default auth.reducer;

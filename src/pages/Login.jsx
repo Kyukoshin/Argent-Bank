@@ -38,6 +38,7 @@ function Login() {
     
       if (response.data.status === 200) {
         dispatch(loginSuccess());
+        localStorage.setItem('token', response.data.body.token)
     
         const profileResponse = await axios.post(
           'http://localhost:3001/api/v1/user/profile',

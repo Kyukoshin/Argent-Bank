@@ -1,25 +1,55 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux'
+import { useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { setUserInfos } from '../redux/auth';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const userFirstName = useSelector((state) => state.auth.firstName);
   const userLastName = useSelector((state) => state.auth.lastName);
+  const token = localStorage.token
+
+  const newFirstName = useRef(null);
+  const newLastName = useRef(null);
+
+  const dispatch = useDispatch();
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
   };
 
   const saveAndClose = () => {
+    axios
+      .put(
+        'http://localhost:3001/api/v1/user/profile',
+        {
+          firstName: newFirstName.current.value,
+          lastName: newLastName.current.value,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
 
-    setIsEditing(false);
+      .then((response) => {
+        dispatch(
+          setUserInfos({
+            firstName: newFirstName.current.value,
+            lastName: newLastName.current.value,
+          }))
+
+        setIsEditing(false);
+        console.log('Profile updated successfully:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error updating profile:', error);
+      });
   };
 
   const cancelEdit = () => {
     setIsEditing(false);
   };
-
 
   return (
     <main class="main bg-dark">
@@ -33,11 +63,11 @@ const Profile = () => {
         {isEditing && (
           <div className="edit-container">
             <div className="edit-container-left">
-              <input type="text" placeholder={userFirstName} />
+              <input type="text" ref={newFirstName} placeholder={userFirstName} />
               <button onClick={saveAndClose}>Save</button>
             </div>
             <div className="edit-container-right">
-              <input type="text" placeholder={userLastName} />
+              <input type="text" ref={newLastName} placeholder={userLastName} />
               <button onClick={cancelEdit}>Cancel</button>
             </div>
           </div>
