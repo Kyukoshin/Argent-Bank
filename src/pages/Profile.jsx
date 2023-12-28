@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux'
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
+
+  const userFirstName = useSelector((state) => state.auth.firstName);
+  const userLastName = useSelector((state) => state.auth.lastName);
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
@@ -20,7 +24,7 @@ const Profile = () => {
   return (
     <main class="main bg-dark">
       <div className="header">
-        <h1>Welcome back<br />Tony Jarvis!</h1>
+        <h1>Welcome back<br />{userFirstName} {userLastName}</h1>
         {!isEditing && (
           <button className="edit-button" onClick={toggleEdit}>
             Edit Name
@@ -29,11 +33,11 @@ const Profile = () => {
         {isEditing && (
           <div className="edit-container">
             <div className="edit-container-left">
-              <input type="text" placeholder="Tony" />
+              <input type="text" placeholder={userFirstName} />
               <button onClick={saveAndClose}>Save</button>
             </div>
             <div className="edit-container-right">
-              <input type="text" placeholder="Jarvis" />
+              <input type="text" placeholder={userLastName} />
               <button onClick={cancelEdit}>Cancel</button>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess } from '../redux/auth';
+import { loginSuccess,setUserInfos } from '../redux/auth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -29,40 +29,55 @@ function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
-    console.log(username)
-    console.log(password)
   
     try {
       const response = await axios.post('http://localhost:3001/api/v1/user/login', {
         email: username,
         password: password,
       });
-
-      console.log(response)
-
+    
       if (response.data.status === 200) {
-				console.log("login ok")
-				dispatch(loginSuccess());
-			}
-
-  
-      if (rememberMe) {
-        localStorage.setItem('rememberedUsername', username);
-        localStorage.setItem('rememberedPassword', password);
-        localStorage.setItem('rememberMe', 'true');
+        dispatch(loginSuccess());
+    
+        const profileResponse = await axios.post(
+          'http://localhost:3001/api/v1/user/profile',
+          {},
+          { headers: { Authorization: `Bearer ${response.data.body.token}` } }
+        );
+    
+        if (profileResponse.data.status === 200) {
+          dispatch(
+            setUserInfos({
+              firstName: profileResponse.data.body.firstName,
+              lastName: profileResponse.data.body.lastName,
+            })
+          );
+        } else {
+          // Handle profile fetch error
+          console.error('Error fetching user profile:', profileResponse.data.message);
+        }
+    
+        if (rememberMe) {
+          localStorage.setItem('rememberedUsername', username);
+          localStorage.setItem('rememberedPassword', password);
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.removeItem('rememberedUsername');
+          localStorage.removeItem('rememberedPassword');
+          localStorage.removeItem('rememberMe');
+        }
+    
+        // Redirect to the profile page
+        const redirectPath = '/';
+        navigate(redirectPath);
       } else {
-        localStorage.removeItem('rememberedUsername');
-        localStorage.removeItem('rememberedPassword');
-        localStorage.removeItem('rememberMe');
+        // Handle login error
+        console.error('Login failed:', response.data.message);
       }
-  
-      // Redirect to the profile page
-      const redirectPath = '/';
-      navigate(redirectPath);
     } catch (error) {
-      // Handle errors (e.g., show an error message)
-      alert("Utilisateur ou mot de passe invalide");
+      // Handle generic error
+      console.error('An error occurred:', error.message);
+      alert('Utilisateur ou mot de passe invalide');
     }
   };
 

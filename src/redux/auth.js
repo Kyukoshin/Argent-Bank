@@ -28,6 +28,11 @@ export const auth = createSlice({
             state.email = ''
             state.password = ''
         },
+
+        setUserInfos: (state, action) => {
+            state.firstName = action.payload.firstName
+			state.lastName = action.payload.lastName
+        },
     },
 });
 
