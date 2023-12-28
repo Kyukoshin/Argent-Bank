@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../redux/auth';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 function Login() {
   const dispatch = useDispatch();
@@ -28,9 +30,23 @@ function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    if (username === 'Utilisateur@site' && password === 'motdepasse') {
-      dispatch(loginSuccess());
+    console.log(username)
+    console.log(password)
+  
+    try {
+      const response = await axios.post('http://localhost:3001/api/v1/user/login', {
+        email: username,
+        password: password,
+      });
 
+      console.log(response)
+
+      if (response.data.status === 200) {
+				console.log("login ok")
+				dispatch(loginSuccess());
+			}
+
+  
       if (rememberMe) {
         localStorage.setItem('rememberedUsername', username);
         localStorage.setItem('rememberedPassword', password);
@@ -40,7 +56,12 @@ function Login() {
         localStorage.removeItem('rememberedPassword');
         localStorage.removeItem('rememberMe');
       }
-    } else {
+  
+      // Redirect to the profile page
+      const redirectPath = '/';
+      navigate(redirectPath);
+    } catch (error) {
+      // Handle errors (e.g., show an error message)
       alert("Utilisateur ou mot de passe invalide");
     }
   };
