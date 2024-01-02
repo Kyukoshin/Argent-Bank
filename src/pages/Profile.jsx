@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setUserInfos } from '../redux/auth';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const userFirstName = useSelector((state) => state.auth.firstName);
-  const userLastName = useSelector((state) => state.auth.lastName);
+  const userFirstName = localStorage.getItem('firstName')
+  const userLastName = localStorage.getItem('lastName')
   const token = localStorage.token
 
   const newFirstName = useRef(null);
@@ -38,6 +38,9 @@ const Profile = () => {
             firstName: newFirstName.current.value,
             lastName: newLastName.current.value,
           }))
+
+          localStorage.setItem('firstName', newFirstName.current.value),
+          localStorage.setItem('lastName', newLastName.current.value)
 
         setIsEditing(false);
         console.log('Profile updated successfully:', response.data);

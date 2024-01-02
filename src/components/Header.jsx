@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Logo from '../img/argentBankLogo.png';
+import { signOut, setToken, loginSuccess } from '../redux/auth';
 
 function Header() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  console.log(isAuthenticated);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(setToken(token));
+      dispatch(loginSuccess());
+    }
+  }, []);
 
   return (
     <nav>

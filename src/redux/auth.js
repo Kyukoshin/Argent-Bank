@@ -17,7 +17,6 @@ export const auth = createSlice({
     reducers: {
         loginSuccess: (state) => {
             state.isAuthenticated = true;
-            state.redirect = '/profile';
         },
 
         signOut: (state) => {
@@ -28,6 +27,7 @@ export const auth = createSlice({
             state.lastName = ''
             state.email = ''
             state.password = ''
+            localStorage.removeItem('token')
         },
 
         setUserInfos: (state, action) => {
@@ -35,11 +35,11 @@ export const auth = createSlice({
 			state.lastName = action.payload.lastName
         },
 
-        setToken: (state) => {
+        setToken: (state, action) => {
             state.token = action.payload.token
         }
     },
 });
 
-export const { setUserInfos, setToken, setAuthenticating, resetState, editUser, loginError, loginSuccess, logout } = auth.actions;
+export const { setUserInfos, setToken, setAuthenticating, resetState, editUser, loginError, loginSuccess, signOut } = auth.actions;
 export default auth.reducer;

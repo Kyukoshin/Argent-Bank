@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess,setUserInfos } from '../redux/auth';
 import { useNavigate } from 'react-router-dom';
@@ -37,8 +37,8 @@ function Login() {
       });
     
       if (response.data.status === 200) {
-        dispatch(loginSuccess());
-        localStorage.setItem('token', response.data.body.token)
+        dispatch(loginSuccess());        
+        localStorage.setItem('token', response.data.body.token)        
     
         const profileResponse = await axios.post(
           'http://localhost:3001/api/v1/user/profile',
@@ -51,8 +51,11 @@ function Login() {
             setUserInfos({
               firstName: profileResponse.data.body.firstName,
               lastName: profileResponse.data.body.lastName,
+              
             })
-          );
+          ),
+          localStorage.setItem('firstName', profileResponse.data.body.firstName),
+          localStorage.setItem('lastName', profileResponse.data.body.lastName)
         } else {
           // Handle profile fetch error
           console.error('Error fetching user profile:', profileResponse.data.message);
