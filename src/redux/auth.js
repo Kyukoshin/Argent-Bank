@@ -28,6 +28,8 @@ export const auth = createSlice({
             state.email = ''
             state.password = ''
             localStorage.removeItem('token')
+            localStorage.removeItem('firstName')
+            localStorage.removeItem('lastName')
         },
 
         setUserInfos: (state, action) => {
