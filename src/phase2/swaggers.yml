@@ -64,7 +64,7 @@ paths:
                 type: text
                 category: text
                 note: text
-    put:
+    patch:
       summary: Create data in endpoint1
       description: Creates data in endpoint1
       requestBody:
