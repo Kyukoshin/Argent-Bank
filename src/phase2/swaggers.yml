@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: ArgentBank - Phase 2
+  description: API allowing the user to retrieve its own account and account details as well as transactions from the server
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001/api/v1/
+    description: Production server
+  - url: http://localhost:3001/api/test/v1/
+    description: Staging server
+paths:
+  /user/accounts:
+    get:
+      summary: Get accounts for a given user
+      parameters:
+        - name: Token
+          in: header
+          description: JWT token from user connection
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: number
+                date: dd/mm/yyyy
+                description: text
+                amount: number
+                balance: number
+                type: text
+                category: text
+                note: text
+
+  /user/account/details:
+    get:
+      summary: Get account details
+      parameters:
+        - name: Token
+          in: header
+          description: JWT token from user connection
+          required: true
+          schema:
+            type: string
+        - name: Account ID
+          in: header
+          description: Id of the account the user wants to retrieve details for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: number
+                date: dd/mm/yyyy
+                description: text
+                amount: number
+                balance: number
+                type: text
+                category: text
+                note: text
+    put:
+      summary: Create data in endpoint1
+      description: Creates data in endpoint1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              category: text
+              note: text
+      responses:
+        '201':
+          description: Created
