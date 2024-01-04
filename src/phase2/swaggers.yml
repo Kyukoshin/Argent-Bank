@@ -27,11 +27,11 @@ paths:
               example:
                 id: number
                 date: dd/mm/yyyy
-                description: text
+                description: string
                 amount: number
                 balance: number
-                type: text
-                category: text
+                type: string
+                category: string
                 note: text
 
   /user/account/details:
@@ -61,9 +61,9 @@ paths:
                 description: text
                 amount: number
                 balance: number
-                type: text
-                category: text
-                note: text
+                type: string
+                category: string
+                note: string
     patch:
       summary: Create data in endpoint1
       description: Creates data in endpoint1
@@ -72,8 +72,19 @@ paths:
         content:
           application/json:
             example:
-              category: text
-              note: text
+              note: string
+      responses:
+        '201':
+          description: Created
+    patch:
+      summary: Create data in endpoint1
+      description: Creates data in endpoint1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              category: string
       responses:
         '201':
           description: Created
