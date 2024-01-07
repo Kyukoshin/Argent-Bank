@@ -26,15 +26,23 @@ paths:
             application/json:
               example:
                 id: number
-                date: dd/mm/yyyy
-                description: string
-                amount: number
                 balance: number
                 type: string
-                category: string
-                note: text
+                card number: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                error: "Invalid request parameters"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                error: "User not found or has no accounts"
 
-  /user/account/details:
+  /user/account/details/{accountId}:
     get:
       summary: Get account details
       parameters:
@@ -44,9 +52,9 @@ paths:
           required: true
           schema:
             type: string
-        - name: Account ID
-          in: header
-          description: Id of the account the user wants to retrieve details for
+        - name: accountId
+          in: path
+          description: ID of the account the user wants to retrieve details for
           required: true
           schema:
             type: string
@@ -64,27 +72,54 @@ paths:
                 type: string
                 category: string
                 note: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                error: "Invalid request parameters"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                error: "Account not found"
+
     patch:
-      summary: Create data in endpoint1
-      description: Creates data in endpoint1
+      summary: Update account details
+      description: Update data in transaction note or category slot
+      parameters:
+        - name: Token
+          in: header
+          description: JWT token from user connection
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: path
+          description: ID of the account to update
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
           application/json:
             example:
               note: string
-      responses:
-        '201':
-          description: Created
-    patch:
-      summary: Create data in endpoint1
-      description: Creates data in endpoint1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            example:
               category: string
       responses:
         '201':
           description: Created
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                error: "Invalid request parameters"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                error: "Account not found"
