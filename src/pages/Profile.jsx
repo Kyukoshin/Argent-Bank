@@ -1,7 +1,8 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setUserInfos } from '../redux/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -14,6 +15,15 @@ const Profile = () => {
   const newLastName = useRef(null);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/*'); 
+    }
+  }, [navigate]);
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
